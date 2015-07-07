@@ -1,3 +1,5 @@
+from icd9 import DIAGNOSIS, PROCEDURE
+
 """
 Functions for converting among ICD9 formats.
 """
@@ -42,15 +44,19 @@ def decimal_to_short(code):
     return "".join(parts)
 
 
-def short_to_decimal(code):
+def short_to_decimal(code, code_type=DIAGNOSIS):
     """
     Convert an ICD9 code from short format to decimal format.
     """
-
-    if len(code) <= 3:
-        return code.lstrip("0")
+    if code_type == PROCEDURE:
+        major_len = 2
     else:
-        return code[:3].lstrip("0") + "." + code[3:]
+        major_len = 3
+
+    if len(code) <= major_len:
+        return code.lstrip('0')
+    else:
+        return '.'.join([code[:major_len].lstrip('0'), code[major_len:]])
 
 
 def short_to_parts(code):
