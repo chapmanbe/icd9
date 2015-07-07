@@ -104,12 +104,12 @@ def parts_to_decimal(major, minor):
     if major[0] in ("V", "E"):
         major = major[0] + major[1:].lstrip("0")
         if len(major) == 1:
-            major = major + "0"
+            major += "0"
     else:
         major = major.lstrip("0")
         if len(major) == 0:
             major = "0"
 
-    return major + "." + minor
+    return ".".join([major, minor]) if minor else major
 
 
